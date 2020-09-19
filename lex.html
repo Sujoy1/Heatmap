@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+          <!-- Page Title-->
+         <title>PredictivEye ChatBot</title>
+          <!-- For checking User activity-->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <meta name="viewport" content="width=device-width, maximum-scale=1">
+        <meta name="og:url" content="http://greenstick.github.io/interactor/">
+        <meta name="og:title" content="Interactor Example">
+        <meta name="og:description" content="An interactive example of the Interactor.js utility's data model.">
+        <meta name="og:image" content="https://avatars2.githubusercontent.com/u/4184092?v=3&amp;u=563b1abca3308334b6e308ffe0a22507b22cd4a4&amp;s=400">
+        
+         <!-- Viewport for correct rendering by device type-->
+         <meta name="viewport" content="width=device-width, initial-scale=1" />
+         <meta name="description" content="A FAQ Bot by PredictivEye" />
+
+         <!-- Scripts and Styles to be included -->
+         <!--Script for User activity-->
+          <!-- Include Knockout.js & Mapping Plugin -->
+        <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
+        <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js"></script>
+        <!-- Include interactor.min.js -->
+        <script type="application/javascript">
+            var Interactor=function(n){this.__init__(n)};Interactor.prototype={__init__:function(n){var e=this;return e.interactions="boolean"!=typeof n.interactions||n.interactions,e.interactionElement="string"==typeof n.interactionElement?n.interactionElement:"interaction",e.interactionEvents=!0===Array.isArray(n.interactionEvents)?n.interactionEvents:["mouseup","touchend"],e.conversions="boolean"!=typeof n.conversions||n.conversions,e.conversionElement="string"==typeof n.conversionElement?n.conversionElement:"conversion",e.conversionEvents=!0===Array.isArray(n.conversionEvents)?n.conversionEvents:["mouseup","touchend"],e.endpoint="string"==typeof n.endpoint?n.endpoint:"/interactions",e.async="boolean"!=typeof n.async||n.async,e.debug="boolean"!=typeof n.debug||n.debug,e.records=[],e.session={},e.loadTime=new Date,e.__initializeSession__(),e.__bindEvents__(),e},__bindEvents__:function(){var n=this;if(!0===n.interactions)for(e=0;e<n.interactionEvents.length;e++)document.querySelector("body").addEventListener(n.interactionEvents[e],function(e){e.stopPropagation(),e.target.classList.value===n.interactionElement&&n.__addInteraction__(e,"interaction")});if(!0===n.conversions)for(var e=0;e<n.conversionEvents.length;e++)document.querySelector("body").addEventListener(n.conversionEvents[e],function(e){e.stopPropagation(),e.target.classList.value===n.conversionElement&&n.__addInteraction__(e,"conversion")});return window.onbeforeunload=function(e){n.__sendInteractions__()},n},__addInteraction__:function(n,e){var t=this,i={type:e,event:n.type,targetTag:n.target.nodeName,targetClasses:n.target.className,content:n.target.innerText,clientPosition:{x:n.clientX,y:n.clientY},screenPosition:{x:n.screenX,y:n.screenY},createdAt:new Date};return t.records.push(i),t.debug&&(t.__closeSession__(),console.log("Session:\n",t.session)),t},__initializeSession__:function(){var n=this;return n.session={loadTime:n.loadTime,unloadTime:new Date,language:window.navigator.language,platform:window.navigator.platform,port:window.location.port,clientStart:{name:window.navigator.appVersion,innerWidth:window.innerWidth,innerHeight:window.innerHeight,outerWidth:window.outerWidth,outerHeight:window.outerHeight},page:{location:window.location.pathname,href:window.location.href,origin:window.location.origin,title:document.title},endpoint:n.endpoint},n},__closeSession__:function(){var n=this;return n.session.unloadTime=new Date,n.session.interactions=n.records,n.session.clientEnd={name:window.navigator.appVersion,innerWidth:window.innerWidth,innerHeight:window.innerHeight,outerWidth:window.outerWidth,outerHeight:window.outerHeight},n},__sendInteractions__:function(){var n=this,e=new XMLHttpRequest;return n.__closeSession__(),e.open("POST",n.endpoint,n.async),e.setRequestHeader("Content-Type","application/json; charset=UTF-8"),e.send(JSON.stringify(n.session)),n}};
+        </script>
+          <!-- End of code for tracking Users Activity-->
+          <script src="https://sdk.amazonaws.com/js/aws-sdk-2.48.0.min.js"></script> 
+         <script type="text/javascript" src="./frubil.js"></script>
+         <script type="text/javascript" src="./tracker.js"></script>
+         <script type="text/javascript" src="./interactor.min.js"></script>
+         <script type="text/javascript" src="./interactor.js"></script>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+         <!-- <script type="text/javascript" src="//js.frubil.info/"></script> -->
+         <link href="./styles.css" rel="stylesheet" type="text/css"></link>
+         <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet"></link>
+    </head>
+            <!--Added the neccessary scripts for tracking user activity through interactor.min.js -->
+    <body>
+		<div class="interaction"></div>
+		<div class="interaction"></div>
+		<div class="interaction"></div>
+		<div class="conversion"></div>
+		<script src="interactor.min.js" type="application/javascript"></script>
+        <script src="interactor.js" type="application/javascript"></script>
+		<script>
+			// An example instantiation with custom arguments
+			var interactions = new Interactor({
+				interactions            : true,
+				interactionElement      : "iconChatbot",
+				interactionEvents       : ["mousedown", "mouseup", "touchstart", "touchend"],
+				conversions             : true,
+				conversionElement       : "box-toggle",
+				conversionEvents        : ["mouseup", "touchend"],
+				endpoint                : '/usage/interactions',
+				async                   : true,
+				debug                   : false
+			});
+		</script>
+	</body>
+<script>
+window.setInterval(() => {
+   let values = [];
+  let valuesfromSession = sessionStorage.getItem('userDataCapturing');
+  values = JSON.parse(valuesfromSession);
+ if(values && values.length && !values.includes(window.location.href)){
+    values.push(window.location.href);
+sessionStorage.setItem("userDataCapturing", JSON.stringify(values))
+  }else if(!values) {
+     let newvalues = [];
+     newvalues.push(window.location.href)
+     sessionStorage.setItem("userDataCapturing", JSON.stringify(newvalues))
+   }
+},1500)
+//var minutesOnSite = Math.floor((new Date() - visitor.session.sessionStart) / 1000 / 60);
+//console.log("Time Spent :" , minutesOnSite);
+// Output the result
+var  f = ["https://devrieker.wpengine.com/season/autumn-winter/?query_type_gender=or&filter_gender=womens","https://devrieker.wpengine.com/brand/rieker/?query_type_gender=or&filter_gender=womens"];
+let checkValues = ["mens", "womens", 'sandals', "tshirts", "shoes"];
+let unwantedValues = ["https:", "http:", "devrieker.wpengine.com"];
+let beforeValues = [];
+f &&  f.map(i => {
+let values = i.split("/");
+beforeValues = [...beforeValues, ...values]
+})
+let totalValues = [];
+beforeValues  &&  beforeValues.map(i => {
+let values = i.split("-").length ? i.split("-").slice(1, i.split("-").length-1): []
+totalValues = [...totalValues, ...values]
+})
+let checkValuesForBeforeValues = totalValues && totalValues.length ? totalValues : beforeValues;
+let finalValues = checkValuesForBeforeValues.filter(i => {
+if(i && i.length > 3){
+  let values = checkValues.filter(j => {
+    if(i.includes(j)){
+      return i
+    }
+  });
+  return values
+}
+});
+let totalFinal = finalValues.filter(j => !unwantedValues.includes(j))
+console.log(totalFinal, "finalValues");
+
+function getElementsByText(str, tag = 'a') {
+  return Array.prototype.slice.call(document.getElementsByTagName(tag)).filter(el => el.textContent.trim() === str.trim());
+}
+
+window.addEventListener('click', function (event) {
+
+   localStorage.name = 'jorge';
+  let tags = ["p", "span", "div"];
+//   let checkTags = ["total", "Total"];
+  // If the clicked element doesn't have the right selector, bail
+let values = [];
+  tags.forEach(i => {
+      let value = getElementsByText("Total", i);
+      values.push(value)
+  });
+
+  localStorage.name = values;
+  let value = event.target;
+   localStorage.setItem("hey", value)
+  }, false);
+
+  window.addEventListener('popstate', function (event) {
+      // Log the state data to the console
+      localStorage.event = event;
+  });
+
+  window.onpopstate = async function(event) {
+
+    //   await localStorage.setItem("url", event)
+      localStorage.Item = event;
+  };
+
+  window.addEventListener('beforeunload', async(e) =>  {
+    let response  = new Promise((res, rej) => {
+      setTimeout(() => res("hello"), 7000)
+    });
+    let result = await response;
+    e.preventDefault();
+  });
+
+
+  window.onhashchange = function() {
+     //code
+}
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function saveAppliedCoupon() {
+        await sleep(10000);
+        couponApplied = document.getElementsByClassName('cart-discount') && document.getElementsByClassName('cart-discount')[0] && document.getElementsByClassName('cart-discount')[0].getElementsByTagName('th') && document.getElementsByClassName('cart-discount')[0].getElementsByTagName('th')[0] ? document.getElementsByClassName('cart-discount')[0].getElementsByTagName('th')[0].innerHTML.toString().slice(8, document.getElementsByClassName('cart-discount')[0].getElementsByTagName('th')[0].innerHTML.toString().length) : "";
+        sessionStorage.setItem("appliedCoupon", couponApplied);
+    }
+
+    if (document.getElementsByName('apply_coupon').length !== 0) {
+        var checkoutButton = document.getElementsByName('apply_coupon')[0];
+        checkoutButton.addEventListener("click",
+            function() {
+                saveAppliedCoupon();
+            });
+    }
+
+    if (document.getElementsByClassName('woocommerce-remove-coupon').length !== 0) {
+        var removeCouponButton = document.getElementsByClassName('woocommerce-remove-coupon')[0];
+        removeCouponButton.addEventListener("click",
+            function() {
+                sessionStorage.removeItem("appliedCoupon");
+            });
+    }
+
+
+    var oldURL = "";
+var currentURL = window.location.href;
+function checkURLchange(currentURL){
+    if(currentURL != oldURL){
+        oldURL = currentURL;
+    }
+
+    oldURL = window.location.href;
+}
+
+checkURLchange();
+</script>
+<!-- Main Script with all the functions -->
+
+
+<!-- Chatbot Area -->
+
+<body>
+    <!-- Bot Icon with Pop up function -->
+    <img src="./Resources/botImage.png" id="iconChatbot" style="cursor: pointer;" alt="PredictivEye Bot" class="chatbotIcon" onclick="popUpToggle(); hideBanner();" />
+     
+    <!-- For Testing Transaction Capture -->
+    <!-- <button id="addToCart" onClick="isGoalDone('addToCart')">Add to Cart</button>
+         <input id="couponCodeApplied"></input>
+         <button id="checkout" onClick="isGoalDone('checkout')">Checkout</button> -->
+    
+    <!-- Persistent banner and Cross button -->
+    <script>
+        var el1 = document.getElementById("iconChatbot");
+        // Adding Single class
+        el1.classList.add("interactor");
+    </script>
+    <div id="banner" style="display: none; cursor: pointer;" onmouseover="toggleCross()" onmouseout="toggleCross()" id="chat-popup-widget-container" class="chat-popup-widget-container chat-popup-widget-container--vertical km-animate">
+        <div class="chat-popup-widget-text-wrapper" onClick="openBot()">
+            <p class="chat-popup-widget-text">Hi there, I am here to help you.</p>
+        </div>
+        <div id="cross" style="display: none;" onClick="hideBanner()" class="chat-popup-widget-close-btn-container">
+            <div class="chat-popup-widget-close-btn"><span class="chat-popup-widget-close-icon-svg"><svg viewBox="0 0 64 64" width="8" xmlns="http://www.w3.org/2000/svg" height="8"><path fill="#fff" d="M28.941 31.786L.613 60.114a2.014 2.014 0 1 0 2.848 2.849l28.541-28.541 28.541 28.541c.394.394.909.59 1.424.59a2.014 2.014 0 0 0 1.424-3.439L35.064 31.786 63.41 3.438A2.014 2.014 0 1 0 60.562.589L32.003 29.15 3.441.59A2.015 2.015 0 0 0 .593 3.439l28.348 28.347z"></path></svg></span></div>
+        </div>
+    </div>
+    <script>
+        var el2 = document.getElementById("banner");
+        // Adding Single class
+        el2.classList.add("interactor");
+    </script>
+    <!-- For Bot Popups -->
+    <div id="box-toggle" style="box-sizing: unset; z-index: 10000;">
+        <section class="chatbox">
+            <div class="chatbotHeader">
+                <!-- Bot Header -->
+                <div class="botIcon">
+                    <!-- Rieker Exclusive -->
+                    <img alt="Rieker" class="botIcons" src="./Resources/riekerBot.png" />
+                    <span class="online"></span>
+                </div>
+                <div class="botAgent">
+                    <!-- Rieker Exclusive -->
+                    <p class="riekerText" style="font-family:'DM Sans';">Rieker</p>
+                    <p class="onlineText" style="font-family:'DM Sans';">Online</p>
+                </div>
+                <div style="padding-top: 5px;margin-left:60px" id="ready" onclick="popUpToggle()">
+                    <svg class="crossIcon" width="64" xmlns="http://www.w3.org/2000/svg" height="64" viewBox="0 0 64 64">
+                        <path fill="#fff" d="M28.941 31.786L.613 60.114a2.014 2.014 0 1 0 2.848 2.849l28.541-28.541 28.541 28.541c.394.394.909.59 1.424.59a2.014 2.014 0 0 0 1.424-3.439L35.064 31.786 63.41 3.438A2.014 2.014 0 1 0 60.562.589L32.003 29.15 3.441.59A2.015 2.015 0 0 0 .593 3.439l28.348 28.347z" stroke-width="6" stroke="#fff"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <section class="chat-window" id="chatWindow">
+            </section>
+            <span id="textCopied" class="toolTipBack"></span> 
+            <form class="chat-input" id="inputArea" onsubmit="return false;">
+                <input type="text" autocomplete="off" placeholder="Type a message" id="inputValue" />
+                <button onclick="submitFunction()">
+                    <svg class="sendIcon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
+                        <path class="km-custom-widget-fill" fill="#ef2147" fill-rule="evenodd" d="M7.878 7.858l-6.032.584-1.588 5.076a.787.787 0 0 0 1.097.944l13.22-6.401a.752.752 0 0 0 0-1.353L1.364.302a.787.787 0 0 0-1.096.944l1.587 5.077 6.021.584a.475.475 0 0 1 0 .946l.002.005z"></path>
+                    </svg>
+                </button>
+            </form>
+            <div class="footer">
+                <div class="paddedFooter">
+                    <p class="powered">Powered by </p>
+                    <a href="https://www.predictiveye.com" rel="noreferrer" target="_blank">
+                        <img class="poweredIcon" alt="PredictivEye" src="./Resources/powered.png" />
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        var el3 = document.getElementById("box-toggle");
+        // Adding Single class
+        el3.classList.add("interactor");
+    </script>
+    <div id="root"></div>
+</body>
+<script src="./index_v2.js"></script>
+</html>
+
+
+<!-- <div style = "margin-top: 20px;">
+    <h4 style="text-align:center;background-color:rgb(226 0 51 / 1);font-style: oblique;font-weight:bold">Limited Sale</h4>
+    <div class = "row">
+        <img src = "./Resources/crop.png" style="width:120px;height:100px;margin-left:18px;"  />
+        <div style = "margin-left: 10px;">
+            <h6>Expires Soon!</h6>
+            <h4 style="font-weight:bold;font-size:16px">Save</h4>
+            <p id = "dynamicText" style = font-weight:bold;font-size:18px>5 % Now</p>
+        </div>
+       </div>
+       <h4 style="text-align:center;background-color: black;color: white;font-size:18px;">CLICK HERE</h4>
+</div> -->
+
+
+<!-- <div style = "margin-top: 20px;">
+    <h4 style="text-align:center;background-color:rgb(226 0 51 / 1);font-style: oblique;font-weight:bold">Limited Sale</h4>
+    <div class = "row">
+        <img src = "./Resources/crop.png" style="width:120px;height:100px;margin-left:18px;"  />
+        <div style = "margin-left: 10px;">
+            <h6>Expires Soon!</h6>
+            <h4 style="font-weight:bold;font-size:16px">Save</h4>
+            <p id = "dynamicText" style = font-weight:bold;font-size:18px>5 % Now</p>
+        </div>
+       </div>
+       <h4 style="text-align:center;background-color: black;color: white;font-size:18px;">CLICK HERE</h4>
+</div> -->
